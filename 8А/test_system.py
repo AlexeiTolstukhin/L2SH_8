@@ -2,16 +2,8 @@ from tkinter import *
 
 
 def check():
-    global row
-    r = 0
-    a1 = answer_1.get()
-    a2 = answer_2.get()
-    if a1 == 11:
-        r += 1
-    if a2 == 23:
-        r += 1
-    label = Label(root, text=f'Поздравляем! У Вас - {r} балла из 2.')
-    label.grid(row=row + 1, column=0)
+    for i in range(len(user_answers)):
+        print(user_answers[i].get())
 
 
 font_header = 'arial 14'
@@ -26,35 +18,37 @@ label.grid(row=row, column=0)
 
 row += 1
 
-label_question_1 = Label(root, text='Вопрос 1', font=font_text)
-label_question_1.grid(row=row, column=0)
-row += 1
-answer_1 = IntVar()
-r_btn_1 = Radiobutton(root, text='Ответ 1', value=11, variable=answer_1)
-r_btn_2 = Radiobutton(root, text='Ответ 2', value=12, variable=answer_1)
-r_btn_3 = Radiobutton(root, text='Ответ 3', value=13, variable=answer_1)
-row += 1
-r_btn_1.grid(row=row, column=0)
-row += 1
-r_btn_2.grid(row=row, column=0)
-row += 1
-r_btn_3.grid(row=row, column=0)
+test = {
+    'Вопрос 1': ['Ответ 11', 'Ответ 12', 'Ответ 13'],
+    'Вопрос 2': ['Ответ 21', 'Ответ 22', 'Ответ 23'],
+    'Вопрос 3': ['Ответ 31', 'Ответ 32', 'Ответ 33'],
+    'Вопрос 4': ['Ответ 41', 'Ответ 42', 'Ответ 43']
+}
 
-row += 1
-label_question_2 = Label(root, text='Вопрос 2', font=font_text)
-label_question_2.grid(row=row, column=0)
+user_answers = [IntVar() for i in range(len(test))]
 
-row += 1
-answer_2 = IntVar()
-r_btn_1 = Radiobutton(root, text='Ответ 1', value=21, variable=answer_2)
-r_btn_2 = Radiobutton(root, text='Ответ 2', value=22, variable=answer_2)
-r_btn_3 = Radiobutton(root, text='Ответ 3', value=23, variable=answer_2)
-row += 1
-r_btn_1.grid(row=row, column=0)
-row += 1
-r_btn_2.grid(row=row, column=0)
-row += 1
-r_btn_3.grid(row=row, column=0)
+n_question = 1
+for question in test:
+    row += 1
+    label_question_1 = Label(root, text=question, font=font_text)
+    label_question_1.grid(row=row, column=0)
+
+    r_btn_1 = Radiobutton(root, text=test[question][0],
+                          value=n_question * 10 + 1,
+                          variable=user_answers[n_question - 1])
+    r_btn_2 = Radiobutton(root, text=test[question][1],
+                          value=n_question * 10 + 2,
+                          variable=user_answers[n_question - 1])
+    r_btn_3 = Radiobutton(root, text=test[question][2],
+                          value=n_question * 10 + 3,
+                          variable=user_answers[n_question - 1])
+    row += 1
+    r_btn_1.grid(row=row, column=0)
+    row += 1
+    r_btn_2.grid(row=row, column=0)
+    row += 1
+    r_btn_3.grid(row=row, column=0)
+    n_question += 1
 
 row += 1
 btn = Button(root, text='Стоп! Хватит!', font=font_text, command=check)
